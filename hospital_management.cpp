@@ -96,7 +96,20 @@ void SortHospitalByName(vector<Hospital> hospitals)
   sort(hospitals.begin(),hospitals.end(),name);
   cout << "SORT BY NAME ALPHABETICALLY ORDER:" << endl<< endl;
   PrintHospitalData(hospitals);	
-}  
+} 
+
+//by rating
+bool rating(Hospital& A, Hospital& B) 
+{ 
+	return A.rating > B.rating; 
+} 
+//Sort Hospital By rating
+void SortHospitalByRating(vector<Hospital> hospitals)
+{
+  sort(hospitals.begin(),hospitals.end(),rating);
+  cout << "SORT BY Highest Rating:" << endl<< endl;
+  PrintHospitalData(hospitals);	
+} 
  
 void HospitalManagement(string patient_Name[],int patient_Id[],string patient_Contact[],int bookingCost[],int P_distance_from_center[], 
 					string hospital_Name[],string locations[],int beds[],float ratings[],string hospital_Contact[],
@@ -144,7 +157,8 @@ void HospitalManagement(string patient_Name[],int patient_Id[],string patient_Co
 	// Call the various operations 
 	PrintHospitalData(hospitals); 
     PrintPatientData(patients,hospitals); 
-    SortHospitalByName(hospitals); 
+    SortHospitalByName(hospitals);
+	SortHospitalByRating(hospitals); 
      
 } 
 					
