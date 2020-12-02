@@ -84,19 +84,20 @@ void PrintPatientData(vector<Patient> &patients,vector<Hospital> &hospitals)
 	} 
 	cout << endl <<endl; 
 }
- 
+
 // by name
 bool name(Hospital& A, Hospital& B) 
 { 
-	return A.H_name < B.H_name; 
+	return A.H_name > B.H_name; 
 } 
 //Sort Hospital By Name 
 void SortHospitalByName(vector<Hospital> hospitals)
 {
   sort(hospitals.begin(),hospitals.end(),name);
-  cout << "SORT BY NAME ALPHABETICALLY ORDER:" << endl<< endl;
+  cout << "SORT BY NAME:" << endl<< endl;
   PrintHospitalData(hospitals);	
 } 
+
 
 //by rating
 bool rating(Hospital& A, Hospital& B) 
@@ -109,7 +110,83 @@ void SortHospitalByRating(vector<Hospital> hospitals)
   sort(hospitals.begin(),hospitals.end(),rating);
   cout << "SORT BY Highest Rating:" << endl<< endl;
   PrintHospitalData(hospitals);	
+}
+
+//by beds available
+bool beds(Hospital& A, Hospital& B) 
+{ 
+	return A.available_beds > B.available_beds; 
 } 
+//Sort Hospital beds available
+void SortByBedsAvailable(vector<Hospital> hospitals)
+{
+  sort(hospitals.begin(),hospitals.end(),beds);
+  cout << "SORT BY Number of Available Beds:" << endl<< endl;
+  PrintHospitalData(hospitals);	
+}  
+
+
+//by beds Price
+bool beds_price(Hospital& A, Hospital& B) 
+{ 
+	return A.price < B.price; 
+} 
+//Sort Hospital beds available
+void SortByBedsPrice(vector<Hospital> hospitals)
+{
+  sort(hospitals.begin(),hospitals.end(),beds_price);
+  cout << "SORT BY Available Minimum Beds Price:" << endl<< endl;
+  PrintHospitalData(hospitals);	
+} 
+
+//by distance
+bool distt(Hospital A, Hospital B) 
+{ 
+	return A.distance < B.distance; 
+} 
+//Sort nearest distance from hospital to patient
+void SortBynearestdistance(vector<Hospital> hospitals, int dis, string name)
+{
+	for(int i=0;i<4;i++)
+	{
+	  hospitals[i].distance+=dis;
+	}
+  sort(hospitals.begin(),hospitals.end(),distt);
+  cout << "Nearest hospital from Patient "<<name<<" :" << endl<< endl;
+  PrintHospitalData(hospitals);	
+}  
+
+
+//Print Hospital by city
+void PrintHospitalBycity(string city,vector<Hospital> hospitals)
+{
+	cout << "PRINT hospitals by Name :"<<city << endl; 
+	
+	cout <<"HospitalName     " 
+	     <<"Location     "
+		 <<"Beds_Available     "
+		 <<"Rating     "
+		 <<"Hospital_Contact     "
+		 <<"Doctor_Name     "
+		 <<"Price_Per_Bed     "
+		 <<"Distance_From_Central     \n";   
+ 
+
+	for (int i = 0; i < hospitals.size(); i++) { 
+	   
+	   if(hospitals[i].location!=city) continue;
+		cout << hospitals[i].H_name<<"               " 
+			 << hospitals[i].location<<"           "
+			 << hospitals[i].available_beds<<"           "
+			 << hospitals[i].rating<<"            "
+			 << hospitals[i].contact<<"          "
+			 << hospitals[i].doctor_name<<"              "
+			 << hospitals[i].price<<"            "
+			 << hospitals[i].distance<<"            "
+			 << endl; 
+	} 
+	cout << endl<<endl; 
+}
  
 void HospitalManagement(string patient_Name[],int patient_Id[],string patient_Contact[],int bookingCost[],int P_distance_from_center[], 
 					string hospital_Name[],string locations[],int beds[],float ratings[],string hospital_Contact[],
@@ -157,9 +234,13 @@ void HospitalManagement(string patient_Name[],int patient_Id[],string patient_Co
 	// Call the various operations 
 	PrintHospitalData(hospitals); 
     PrintPatientData(patients,hospitals); 
-    SortHospitalByName(hospitals);
-	SortHospitalByRating(hospitals); 
-     
+    
+    SortHospitalByName(hospitals); 
+    SortHospitalByRating(hospitals); 
+    SortBynearestdistance(hospitals, patients[0].distance,patients[0].P_name );
+    PrintHospitalBycity("Bangalore",hospitals); 
+    SortByBedsAvailable(hospitals); 
+    SortByBedsPrice(hospitals);
 } 
 					
 
